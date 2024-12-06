@@ -56,7 +56,7 @@ jobs:
             npm install -g serve
 
             # Start the application using PM2 and 'serve' to serve static files
-            pm2 restart serve --name "myapp" -- -s dist || pm2 start serve --name "myapp" -- -s dist
+            pm2 start $(which serve) --name "myapp" -- -s dist
 
             # Save the PM2 process list
             pm2 save --force
