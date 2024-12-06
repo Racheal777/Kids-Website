@@ -1,4 +1,4 @@
-name: Deploy to Ubunto EC2
+name: Deploy to Ubuntu EC2
 
 on:
   push:
