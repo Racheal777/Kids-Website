@@ -21,7 +21,7 @@ jobs:
         # setup ssh
         mkdir -p ~/.ssh
         echo "$PRIVATE_KEY" > ~/.ssh/deploy_key
-        chmod 600 ~/.ssh.deploy_key
+        chmod 600 ~/.ssh/deploy_key
 
         # deploy to EC2
         ssh -i ~/.ssh/deploy_key \
