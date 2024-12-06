@@ -43,14 +43,16 @@ const Features = () => {
       </div>
     </div>
 
+
+
     <div className="mt-24 mb-20">
-        <div className="text my-7 text-center p-14">
+        <div className="text  text-center p-3">
     <h1 className="font-bold text-2xl text-pink-600">What we offer</h1>
     <p>Far far away, behind the word mountains, far from the
          countries Vokalia and Consonantia, there live the blind texts.</p>
         </div>
 
-        <div className="grid grid-cols-3 gap-10">
+        {/* <div className="grid grid-cols-3 gap-10">
             <div>
                 <span className="bg-pink-600 py-3 px-3 text-white rounded-full"> <FontAwesomeIcon icon={faMusic} />{" "}</span>
                 <h2 className="py-3">Music Class</h2>
@@ -99,7 +101,7 @@ const Features = () => {
                     there live the blind texts.</p>
             </div>
 
-        </div>
+        </div> */}
     </div>
     </section>
   );

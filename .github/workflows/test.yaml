@@ -1,0 +1,28 @@
+name: Deploy to Ubunto EC2
+
+on:
+  push:
+    branches: ['master']
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Deploy to EC2
+      env: 
+        EC2_HOST: ${{ secrets.EC2_HOST }}
+        EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
+        PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+      run: |
+        # setup ssh
+        mkdir -p ~/.ssh
+        echo "$PRIVATE_KEY" > ~/.ssh/deploy_key
+        chmod 600 ~/.ssh.deploy_key
+
+        # deploy to EC2
+        ssh -i ~/.ssh/deploy_key \
+          $EC2_USERNAME@EC2_HOST

@@ -6,6 +6,7 @@ import Hero from "./components/Hero";
 import Learn from "./components/Learn";
 
 import Navbar from "./components/Navbar";
+import Offers from "./components/Offers";
 
 function App() {
   return (
@@ -13,8 +14,10 @@ function App() {
       <Navbar />
       <Hero/>
       <Features/>
+      <Offers/>
       <Learn/>
       <About/>
+
       <Footer/>
     </div>
   );
