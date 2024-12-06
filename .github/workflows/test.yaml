@@ -24,5 +24,6 @@ jobs:
         chmod 600 ~/.ssh/deploy_key
 
         # deploy to EC2
-        ssh -i ~/.ssh/deploy_key \
-          $EC2_USERNAME@EC2_HOST
+        ssh -o StrictHostKeyChecking=no \
+            -i ~/.ssh/deploy_key \
+            $EC2_USERNAME@${{ secrets.EC2_HOST }}
