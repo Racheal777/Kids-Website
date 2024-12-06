@@ -26,4 +26,21 @@ jobs:
         # deploy to EC2
         ssh -o StrictHostKeyChecking=no \
             -i ~/.ssh/deploy_key \
-            $EC2_USERNAME@${{ secrets.EC2_HOST }}
+            $EC2_USERNAME@${{ secrets.EC2_HOST }} << 'EOF'
+
+            #Update project
+
+            cd ~/myapp
+            git pull origin master
+
+            #Install dependencies
+            npm ci
+
+            export NODE_ENV=production
+
+            #Restart Application
+            pm2 restart app.js || pm2 start app.js
+            pm2 save
+
+            EOF
+
