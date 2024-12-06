@@ -23,6 +23,13 @@ jobs:
         echo "$PRIVATE_KEY" > ~/.ssh/deploy_key
         chmod 600 ~/.ssh/deploy_key
 
+        # Archive the application code
+        tar -czf myapp.tar.gz .
+
+        # Transfer the code to EC2
+        scp -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key myapp.tar.gz $EC2_USERNAME@${{ secrets.EC2_HOST }}:/home/$EC2_USERNAME
+
+
         # deploy to EC2
         ssh -o StrictHostKeyChecking=no \
             -i ~/.ssh/deploy_key \
@@ -30,8 +37,12 @@ jobs:
 
             #Update project
 
-            cd ~/myapp
-            git pull origin master
+            cd /home/$USER
+            mkdir -p myapp
+            tar -xzf myapp.tar.gz -C myapp
+            cd myapp
+
+           
 
             #Install dependencies
             npm ci
