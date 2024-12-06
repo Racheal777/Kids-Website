@@ -53,10 +53,12 @@ jobs:
            # Build the app for production
             npm run build
 
-           # Start the application using pm2
-            pm2 restart npm --name "myapp" -- start || pm2 start npm --name "myapp" -- start
+            npm install -g serve
 
-          # Save the PM2 process list
-            pm2 save
+            # Start the application using PM2 and 'serve' to serve static files
+            pm2 restart serve --name "myapp" -- -s dist || pm2 start serve --name "myapp" -- -s dist
 
-            EOF
+            # Save the PM2 process list
+            pm2 save --force
+
+        EOF
