@@ -18,40 +18,40 @@ jobs:
         EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
         PRIVATE_KEY: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
       run: |
-        # setup ssh
+        # Setup SSH
         mkdir -p ~/.ssh
         echo "$PRIVATE_KEY" > ~/.ssh/deploy_key
         chmod 600 ~/.ssh/deploy_key
 
-        # Archive the application code
-        tar -czf myapp.tar.gz .
+        # Archive the application code using zip
+        zip -r myapp.zip .
 
         # Transfer the code to EC2
-        scp -o StrictHostKeyChecking=no -i ~/.ssh/deploy_key myapp.tar.gz $EC2_USERNAME@${{ secrets.EC2_HOST }}:/home/$EC2_USERNAME
+        scp -o StrictHostKeyChecking=no \
+            -i ~/.ssh/deploy_key myapp.zip \
+            $EC2_USERNAME@${{ secrets.EC2_HOST }}:/home/$EC2_USERNAME
 
-
-        # deploy to EC2
+        # Deploy to EC2
         ssh -o StrictHostKeyChecking=no \
             -i ~/.ssh/deploy_key \
             $EC2_USERNAME@${{ secrets.EC2_HOST }} << 'EOF'
 
-            #Update project
-
+            # Navigate to home directory
             cd /home/$USER
             mkdir -p myapp
-            tar -xzf myapp.tar.gz -C myapp
+
+            # Unzip the application code into the myapp directory
+            unzip -o myapp.zip -d myapp 
             cd myapp
 
-           
-
-            #Install dependencies
+            # Install dependencies
             npm ci
 
+            # Set environment variable for production
             export NODE_ENV=production
 
-            #Restart Application
+            # Restart the application using pm2
             pm2 restart app.js || pm2 start app.js
             pm2 save
 
             EOF
-
