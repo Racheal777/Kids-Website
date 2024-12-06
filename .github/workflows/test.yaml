@@ -50,8 +50,13 @@ jobs:
             # Set environment variable for production
             export NODE_ENV=production
 
-            # Restart the application using pm2
-            pm2 restart app.js || pm2 start app.js
+           # Build the app for production
+            npm run build
+
+           # Start the application using pm2
+            pm2 restart npm --name "myapp" -- start || pm2 start npm --name "myapp" -- start
+
+          # Save the PM2 process list
             pm2 save
 
             EOF
